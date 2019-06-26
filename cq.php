@@ -11,16 +11,23 @@
 			<?php the_title(); ?>
         </h2>
 		<?php
-		$_p = get_posts( array(
-			'post__in'       => array( 22, 23, 29, 16, 18, 32, 34, 41, 14, 37, 25 ),
+		$paged          = get_query_var( "paged" ) ? get_query_var( "paged" ) : 1;
+		$posts_per_page = 3;
+		$total = 15;
+		$post_ids       = array( 22, 23, 29, 16, 18, 32, 34, 41, 14, 37, 25, 1, 27, 39 );
+		$_p             = get_posts( array(
+			//'post__in'       => $post_ids,
+            'author__in'=>array(1),
 			'orderby'        => 'post__in',
-			'posts_per_page' => 3,
+			'numberposts'=>$total,
+			'posts_per_page' => $posts_per_page,
+			'paged'          => $paged
 
 		) );
 		foreach ( $_p as $post ) {
 			setup_postdata( $post );
 			?>
-    <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+            <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
 			<?php
 		}
 		wp_reset_postdata();
@@ -30,10 +37,8 @@
                 <div class="col-md-4"></div>
                 <div class="col-md-8">
 					<?php
-					the_posts_pagination( array(
-						"screen_reader_text" => ' ',
-						"prev_text"          => "New Posts",
-						"next_text"          => "Old Posts"
+					echo paginate_links( array(
+						'total' => ceil( $total / $posts_per_page )
 					) );
 					?>
                 </div>
