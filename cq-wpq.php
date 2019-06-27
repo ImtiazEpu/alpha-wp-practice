@@ -21,19 +21,22 @@
 			'orderby'        => 'post__in',
 			'posts_per_page' => $posts_per_page,
 			'paged'          => $paged,
-            'tax_query'=> array(
-                    'relation' => 'OR',
-                array(
-	                'taxonomy' => 'category',
-	                'field'    => 'slug',
-	                'terms'    => 'new',
-                ),
-	            array(
-		            'taxonomy' => 'post_tag',
-		            'field'    => 'slug',
-		            'terms'    => 'special',
-	            )
-            ),
+//            'tax_query'=> array(
+//                    'relation' => 'OR',
+//                array(
+//	                'taxonomy' => 'category',
+//	                'field'    => 'slug',
+//	                'terms'    => 'new',
+//                ),
+//	            array(
+//		            'taxonomy' => 'post_tag',
+//		            'field'    => 'slug',
+//		            'terms'    => 'special',
+//	            )
+//            ),
+			'monthnum'       => 5,
+			'year'           => 2019,
+			'post_status' => 'draft'
 
 		) );
 		while ( $_p->have_posts() ) {
