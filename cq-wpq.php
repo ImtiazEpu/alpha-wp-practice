@@ -31,10 +31,12 @@
 		?>
         <div class="container post-pagination">
             <div class="row">
-                <div class="col-md-4"></div>
-                <div class="col-md-8">
+                <div class="col-md-12">
 					<?php
-
+                       echo paginate_links(array(
+                           'total'=> $_p->max_num_pages,
+                           'current'=>$paged,
+                        ));
 					?>
                 </div>
             </div>
