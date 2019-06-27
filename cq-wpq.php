@@ -21,6 +21,13 @@
 			'orderby'        => 'post__in',
 			'posts_per_page' => $posts_per_page,
 			'paged'          => $paged,
+			'tax_query' => array(
+				'relation' => 'OR',
+					array(
+						'taxonomy' => 'post_format',
+						'field'    => 'slug',
+						'terms'    => array( 'post-format-image' ),
+					),)
 //            'tax_query'=> array(
 //                    'relation' => 'OR',
 //                array(
@@ -34,9 +41,9 @@
 //		            'terms'    => 'special',
 //	            )
 //            ),
-			'monthnum'       => 5,
-			'year'           => 2019,
-			'post_status' => 'draft'
+//			'monthnum'       => 5,
+//			'year'           => 2019,
+//			'post_status' => 'draft'
 
 		) );
 		while ( $_p->have_posts() ) {
