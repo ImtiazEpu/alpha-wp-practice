@@ -15,28 +15,43 @@
 		$posts_per_page = 3;
 		$post_ids       = array( 22, 23, 29, 16, 18, 32, 34, 41, 14, 37, 25, 1, 27, 39 );
 		$_p             = new WP_Query( array(
-			'post__in'       => $post_ids,
+			//'post__in'       => $post_ids,
+//			'category_name'  => 'new',
+//			'tag'            => 'special',
 			'orderby'        => 'post__in',
 			'posts_per_page' => $posts_per_page,
-			'paged'          => $paged
+			'paged'          => $paged,
+            'tax_query'=> array(
+                    'relation' => 'OR',
+                array(
+	                'taxonomy' => 'category',
+	                'field'    => 'slug',
+	                'terms'    => 'new',
+                ),
+	            array(
+		            'taxonomy' => 'post_tag',
+		            'field'    => 'slug',
+		            'terms'    => 'special',
+	            )
+            ),
 
 		) );
-		 while ($_p->have_posts()){
-            $_p->the_post();
+		while ( $_p->have_posts() ) {
+			$_p->the_post();
 			?>
             <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
 			<?php
 		}
-        wp_reset_query();
+		wp_reset_query();
 		?>
         <div class="container post-pagination">
             <div class="row">
                 <div class="col-md-12">
 					<?php
-                       echo paginate_links(array(
-                           'total'=> $_p->max_num_pages,
-                           'current'=>$paged,
-                        ));
+					echo paginate_links( array(
+						'total'   => $_p->max_num_pages,
+						'current' => $paged,
+					) );
 					?>
                 </div>
             </div>
