@@ -21,8 +21,21 @@
 			'orderby'        => 'post__in',
 			'posts_per_page' => $posts_per_page,
 			'paged'          => $paged,
-			'meta_key'       => 'feature',
-			'meta_value'     => 1
+			'meta_query'     => array(
+				'relation' => 'AND',
+				array(
+					'key'     => 'feature',
+					'value'   => '1',
+					'compare' => '='
+				),
+				array(
+					'key'     => 'homepage',
+					'value'   => '1',
+					'compare' => '='
+				)
+			)
+//			'meta_key'       => 'feature',
+//			'meta_value'     => 1
 //			'tax_query' => array(
 //				'relation' => 'OR',
 //					array(
