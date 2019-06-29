@@ -21,13 +21,15 @@
 			'orderby'        => 'post__in',
 			'posts_per_page' => $posts_per_page,
 			'paged'          => $paged,
-			'tax_query' => array(
-				'relation' => 'OR',
-					array(
-						'taxonomy' => 'post_format',
-						'field'    => 'slug',
-						'terms'    => array( 'post-format-image' ),
-					),)
+			'meta_key'       => 'feature',
+			'meta_value'     => 1
+//			'tax_query' => array(
+//				'relation' => 'OR',
+//					array(
+//						'taxonomy' => 'post_format',
+//						'field'    => 'slug',
+//						'terms'    => array( 'post-format-image' ),
+//					),)
 //            'tax_query'=> array(
 //                    'relation' => 'OR',
 //                array(
