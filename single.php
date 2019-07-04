@@ -49,7 +49,7 @@ if ( ! is_active_sidebar( "sidebar-1" ) ) {
 											//the_post_thumbnail("alpha-square-new3");
 
 											the_content();
-											if ( get_post_format() == 'image' && function_exists("the_field") ):
+											if ( get_post_format() == 'image' && function_exists( "the_field" ) ):
 												?>
                                                 <div class="col-md-4 px-0">
                                                     <ul class="list-group">
@@ -83,30 +83,31 @@ if ( ! is_active_sidebar( "sidebar-1" ) ) {
 														<?php endif; ?>
                                                     </ul>
                                                     <p>
-	                                                    <?php
-	                                                    $alpha_image= get_field('image');
-	                                                    $alpha_image_details= wp_get_attachment_image_src($alpha_image,"alpha-square");
-	                                                    echo "<img src='".esc_url($alpha_image_details[0])."'/>";
-	                                                    ?>
+														<?php
+														$alpha_image         = get_field( 'image' );
+														$alpha_image_details = wp_get_attachment_image_src( $alpha_image,
+															"alpha-square" );
+														echo "<img src='" . esc_url( $alpha_image_details[ 0 ] ) . "'/>";
+														?>
                                                     </p>
                                                     <p>
-                                                        <?php
-                                                           $file= get_field('attachment');
-                                                           if ($file){
-                                                               $file_url = wp_get_attachment_url($file);
-                                                               $file_thumb= get_field("thumbnail",$file);
-                                                               if ($file_thumb){
-                                                                   $file_thumb_details= wp_get_attachment_image_src
-                                                                   ($file_thumb);
-	                                                               echo "<a target='_blank' href='{$file_url}'><img src='"
-                                                                        .esc_url
-                                                                       ($file_thumb_details[0])
-                                                                        ."'/></a>";
-                                                               }else{
-	                                                               echo "<a target='_blank' href='{$file_url}'>{$file_url}</a>";
-                                                               }
-                                                           }
-                                                        ?>
+														<?php
+														$file = get_field( 'attachment' );
+														if ( $file ) {
+															$file_url   = wp_get_attachment_url( $file );
+															$file_thumb = get_field( "thumbnail", $file );
+															if ( $file_thumb ) {
+																$file_thumb_details = wp_get_attachment_image_src
+																( $file_thumb );
+																echo "<a target='_blank' href='{$file_url}'><img src='"
+																     . esc_url
+																     ( $file_thumb_details[ 0 ] )
+																     . "'/></a>";
+															} else {
+																echo "<a target='_blank' href='{$file_url}'>{$file_url}</a>";
+															}
+														}
+														?>
                                                     </p>
 
                                                 </div>
@@ -131,7 +132,23 @@ if ( ! is_active_sidebar( "sidebar-1" ) ) {
                                                 <p>
 													<?php echo get_the_author_meta( "description" ); ?>
                                                 </p>
-
+												<?php if ( function_exists( "the_field" ) ): ?>
+                                                    <p>
+														<?php
+														$facebook = get_field( "facebook" );
+														if ( $facebook ):?>
+                                                            Facebook:<?php the_field( "facebook", "user_"
+															                                      . get_the_author_meta(
+																                                      "ID" ) ); ?><br>
+														<?php endif; ?>
+                                                        Twitter:<?php the_field( "twitter", "user_"
+														                                    . get_the_author_meta(
+															                                    "ID" ) ); ?><br>
+                                                        LinkedIn:<?php the_field( "linkedin", "user_"
+														                                      . get_the_author_meta(
+															                                      "ID" ) ); ?><br>
+                                                    </p>
+												<?php endif; ?>
                                             </div>
                                         </div>
                                     </div>
