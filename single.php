@@ -38,8 +38,7 @@ if ( ! is_active_sidebar( "sidebar-1" ) ) {
 											/*if ( !class_exists( 'Attachments' ) ) {*/
 											if ( has_post_thumbnail() ) {
 												$thumbnail_url = get_the_post_thumbnail_url( null, "large" );
-												printf( '<a class="popup" href="%s" data-featherlight="image">',
-													$thumbnail_url );
+												printf( '<a class="popup" href="%s" data-featherlight="image">', $thumbnail_url );
 												the_post_thumbnail( "large", array( "class" => "img-fluid mb-4" ) );
 												echo '</a>';
 												/*}*/
@@ -85,8 +84,7 @@ if ( ! is_active_sidebar( "sidebar-1" ) ) {
                                                     <p>
 														<?php
 														$alpha_image         = get_field( 'image' );
-														$alpha_image_details = wp_get_attachment_image_src( $alpha_image,
-															"alpha-square" );
+														$alpha_image_details = wp_get_attachment_image_src( $alpha_image, "alpha-square" );
 														echo "<img src='" . esc_url( $alpha_image_details[ 0 ] ) . "'/>";
 														?>
                                                     </p>
@@ -97,11 +95,8 @@ if ( ! is_active_sidebar( "sidebar-1" ) ) {
 															$file_url   = wp_get_attachment_url( $file );
 															$file_thumb = get_field( "thumbnail", $file );
 															if ( $file_thumb ) {
-																$file_thumb_details = wp_get_attachment_image_src
-																( $file_thumb );
-																echo "<a target='_blank' href='{$file_url}'><img src='"
-																     . esc_url
-																     ( $file_thumb_details[ 0 ] )
+																$file_thumb_details = wp_get_attachment_image_src( $file_thumb );
+																echo "<a target='_blank' href='{$file_url}'><img src='" . esc_url( $file_thumb_details[ 0 ] )
 																     . "'/></a>";
 															} else {
 																echo "<a target='_blank' href='{$file_url}'>{$file_url}</a>";
@@ -137,21 +132,37 @@ if ( ! is_active_sidebar( "sidebar-1" ) ) {
 														<?php
 														$facebook = get_field( "facebook" );
 														if ( $facebook ):?>
-                                                            Facebook:<?php the_field( "facebook", "user_"
-															                                      . get_the_author_meta(
-																                                      "ID" ) ); ?><br>
+                                                            Facebook:<?php the_field( "facebook", "user_" . get_the_author_meta(
+																	"ID" ) ); ?><br>
 														<?php endif; ?>
-                                                        Twitter:<?php the_field( "twitter", "user_"
-														                                    . get_the_author_meta(
-															                                    "ID" ) ); ?><br>
-                                                        LinkedIn:<?php the_field( "linkedin", "user_"
-														                                      . get_the_author_meta(
-															                                      "ID" ) ); ?><br>
+                                                        Twitter:<?php the_field( "twitter", "user_" . get_the_author_meta(
+																"ID" ) ); ?><br>
+                                                        LinkedIn:<?php the_field( "linkedin", "user_" . get_the_author_meta(
+																"ID" ) ); ?><br>
                                                     </p>
 												<?php endif; ?>
                                             </div>
                                         </div>
                                     </div>
+
+									<?php if ( function_exists( "the_field" ) ): ?>
+                                        <div>
+                                            <h1><?php _e( "Related Posts", "alpha" ) ?></h1>
+											<?php
+											$related_posts = get_field( "related_posts" );
+											$alpha_rp      = new WP_Query( array(
+												'post__in' => $related_posts,
+												'orderby'  => 'post__in',
+											) );
+											while ( $alpha_rp->have_posts() ) {
+												$alpha_rp->the_post(); ?>
+                                                <h4><?php the_title(); ?></h4>
+												<?php
+											}
+											wp_reset_query();
+											?>
+                                        </div>
+									<?php endif; ?>
 
 									<?php if ( ! post_password_required() ): ?>
                                         <div class="col-md-12">
