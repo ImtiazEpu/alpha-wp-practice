@@ -149,6 +149,16 @@ if ( ! is_active_sidebar( "sidebar-1" ) ) {
 		                                                echo "<img src='" . esc_url( $alpha_image_details[ 0 ] ) . "'/>";
 		                                                ?>
                                                     </p>
+
+                                                    <p>
+		                                                <?php
+		                                                $file = get_post_meta( get_the_ID(),'_alpha_resume_id',true );
+		                                                if ( $file ) {
+			                                                $file_url   = wp_get_attachment_url( $file );
+			                                                echo "<a target='_blank' href='{$file_url}'>{$file_url}</a>";
+		                                                }
+		                                                ?>
+                                                    </p>
                                                 </div>
 											<?php
 											endif;

@@ -52,4 +52,21 @@ function cmb2_add_img_info_metabox() {
 		'type' => 'file',
 	) );
 
+	$cmb->add_field( array(
+		'name' => __( 'Upload Resume', 'alpha' ),
+		'id' => $prefix . 'resume',
+		'type' => 'file',
+		'text' => array(
+			'add_upload_file_text' => __('Upload PDF file','alpha')
+		),
+		'query_args' =>array(
+			'type' => array(
+				'application/pdf'
+			),
+		),
+		'options' =>array(
+			'url' =>false,
+		)
+	) );
+
 }
