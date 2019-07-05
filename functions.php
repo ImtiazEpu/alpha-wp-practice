@@ -1,7 +1,7 @@
 <?php
-require_once get_theme_file_path('/inc/tgm.php');
+require_once get_theme_file_path( '/inc/tgm.php' );
 //require_once get_theme_file_path('/inc/acf-mb.php');
-require_once get_theme_file_path('/inc/cmb2-mb.php');
+require_once get_theme_file_path( '/inc/cmb2-mb.php' );
 if ( class_exists( 'Attachments' ) ) {
 	require_once get_theme_file_path( "/lib/attachments.php" );
 }
@@ -176,6 +176,7 @@ if ( ! function_exists( "alpha_about_page_template_banner" ) ) {
                         background-size: cover;
                         margin-bottom: 50px;
                     }
+
                     .header h1.heading a, h3.tagline {
                         color: #<?php echo get_header_textcolor();?>;
                     <?php
@@ -189,6 +190,7 @@ if ( ! function_exists( "alpha_about_page_template_banner" ) ) {
 			}
 		}
 	}
+
 	add_action( "wp_head", "alpha_about_page_template_banner", 11 );
 }
 
@@ -199,13 +201,16 @@ function alpha_body_class( $classes ) {
 
 	return $classes;
 }
+
 add_filter( "body_class", "alpha_body_class" );
 
 
 function alpha_post_class( $classes ) {
 	unset( $classes[ array_search( "format-audio", $classes ) ] );
+
 	return $classes;
 }
+
 add_filter( "post_class", "alpha_post_class" );
 
 
@@ -222,20 +227,35 @@ function alpha_highlight_search_results( $text ) {
 		$pattern = '/(' . join( '|', explode( ' ', get_search_query() ) ) . ')/i';
 		$text    = preg_replace( $pattern, '<span class="search-highlight">\0</span>', $text );
 	}
+
 	return $text;
 }
+
 add_filter( 'the_content', 'alpha_highlight_search_results' );
 add_filter( 'the_excerpt', 'alpha_highlight_search_results' );
 add_filter( 'the_title', 'alpha_highlight_search_results' );
 
-function alpha_modify_main_post($wpq){
-    if (is_home() && $wpq->is_main_query()){
-        $wpq->set('post__not_in',array(22));
-    }
+function alpha_modify_main_post( $wpq ) {
+	if ( is_home() && $wpq->is_main_query() ) {
+		$wpq->set( 'post__not_in', array( 22 ) );
+	}
 }
-add_action('pre_get_posts', 'alpha_modify_main_post');
-add_filter('acf/settings/show_admin','__return_false');
 
+add_action( 'pre_get_posts', 'alpha_modify_main_post' );
+add_filter( 'acf/settings/show_admin', '__return_false' );
+
+function alpha_admin_asset( $hook ) {
+    if ( isset( $_REQUEST[ 'post' ] ) || isset( $_REQUEST[ 'post_ID' ] ) ) {
+    	$post_id = empty( $_REQUEST[ 'post_ID' ] ) ? $_REQUEST[ 'post' ] : $_REQUEST[ 'post_ID' ];
+    }
+	if ( "post.php" == $hook ) {
+	    $post_format= get_post_format($post_id);
+		wp_enqueue_script( "admin-js", get_theme_file_uri( "/assets/js/admin.js" ), array( "jquery" ), VERSION, true );
+		wp_localize_script("admin-js","alpha_pf",array("format"=>$post_format));
+	}
+}
+
+add_action( "admin_enqueue_scripts", "alpha_admin_asset" );
 
 
 
