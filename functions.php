@@ -64,7 +64,11 @@ function alpha_assets() {
 		wp_enqueue_style( "util-css", get_template_directory_uri() . "/assets/css/util.css", VERSION );
 		wp_enqueue_style( "main-css", get_template_directory_uri() . "/assets/css/main.css", VERSION );
 		wp_enqueue_style( "alpha", get_stylesheet_uri(), VERSION );
-	} else {
+	}elseif ($launcher_template_name == "pricing-table.php"){
+		wp_enqueue_style( "bootstrap", "//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" );
+		wp_enqueue_style( "alpha-style", get_template_directory_uri() . "/assets/css/alpha.css", VERSION );
+		wp_enqueue_style( "alpha", get_stylesheet_uri(), VERSION );
+    } else {
 		wp_enqueue_style( "bootstrap", "//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" );
 		wp_enqueue_style( "featherlight-css",
 			"//cdn.rawgit.com/noelboss/featherlight/1.7.13/release/featherlight.min.css" );
@@ -72,16 +76,14 @@ function alpha_assets() {
 		wp_enqueue_style( "tns-style", "//cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.7.1/tiny-slider.css" );
 		wp_enqueue_style( "fontawesome-css", "//use.fontawesome.com/releases/v5.8.2/css/all.css" );
 		wp_enqueue_style( "alpha", get_stylesheet_uri(), VERSION );
-		wp_enqueue_style( "alpha-style", get_template_directory_uri() . "/assets/css/alpha.css", VERSION );
-
-		wp_enqueue_script( "tns-js", "//cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.7.1/min/tiny-slider.js", null,
-			"0.0.1", true );
-		wp_enqueue_script( "featherlight-js",
-			"//cdn.rawgit.com/noelboss/featherlight/1.7.13/release/featherlight.min.js", array( "jquery" ), "0.0.1",
-			true );
-		wp_enqueue_script( "alpha-main2", get_theme_file_uri( "/assets/js/main.js" ),
-			array( "jquery", "featherlight-js" ), VERSION, true );
 	}
+	wp_enqueue_script( "tns-js", "//cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.7.1/min/tiny-slider.js", null,
+		"0.0.1", true );
+	wp_enqueue_script( "featherlight-js",
+		"//cdn.rawgit.com/noelboss/featherlight/1.7.13/release/featherlight.min.js", array( "jquery" ), "0.0.1",
+		true );
+	wp_enqueue_script( "alpha-main2", get_theme_file_uri( "/assets/js/main.js" ),
+		array( "jquery", "featherlight-js" ), VERSION, true );
 
 }
 
