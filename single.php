@@ -130,15 +130,25 @@ if ( ! is_active_sidebar( "sidebar-1" ) ) {
 												<?php if ( function_exists( "the_field" ) ): ?>
                                                     <p>
 														<?php
-														$facebook = get_field( "facebook" );
+														$facebook = get_field( "facebook","user_".get_the_author_meta( "ID" ));
 														if ( $facebook ):?>
                                                             Facebook:<?php the_field( "facebook", "user_" . get_the_author_meta(
 																	"ID" ) ); ?><br>
 														<?php endif; ?>
-                                                        Twitter:<?php the_field( "twitter", "user_" . get_the_author_meta(
-																"ID" ) ); ?><br>
-                                                        LinkedIn:<?php the_field( "linkedin", "user_" . get_the_author_meta(
-																"ID" ) ); ?><br>
+
+	                                                    <?php
+	                                                    $twitter = get_field( "twitter","user_".get_the_author_meta( "ID" ));
+	                                                    if ( $twitter ):?>
+                                                            Twitter:<?php the_field( "twitter", "user_" . get_the_author_meta(
+				                                                    "ID" ) ); ?><br>
+	                                                    <?php endif; ?>
+
+                                                        <?php
+	                                                    $linkedin = get_field( "linkedin","user_".get_the_author_meta( "ID" ));
+	                                                    if ( $linkedin ):?>
+                                                            LinkedIn:<?php the_field( "linkedin", "user_" . get_the_author_meta(
+				                                                    "ID" ) ); ?><br>
+	                                                    <?php endif; ?>
                                                     </p>
 												<?php endif; ?>
                                             </div>
