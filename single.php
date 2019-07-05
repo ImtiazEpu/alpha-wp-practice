@@ -108,6 +108,42 @@ if ( ! is_active_sidebar( "sidebar-1" ) ) {
                                                 </div>
 											<?php
 											endif;
+											?>
+											<?php
+											if ( get_post_format() == 'image' && class_exists( "CMB2" ) ):
+                                                $alpha_camera_model= get_post_meta(get_the_ID(),"_alpha_camera_model",true);
+                                                $alpha_location= get_post_meta(get_the_ID(),"_alpha_location",true);
+                                                $alpha_date= get_post_meta(get_the_ID(),"_alpha_date",true);
+                                                $alpha_licensed= get_post_meta(get_the_ID(),"_alpha_licensed",true);
+                                                $alpha_license_information= get_post_meta(get_the_ID(),"_alpha_license_information",true);
+												?>
+                                                <div class="col-md-4 px-0">
+                                                    <ul class="list-group">
+                                                        <li class="list-group-item">
+                                                            <Strong>Camera Model:</Strong>
+															<?php echo esc_html( $alpha_camera_model );?>
+                                                        </li>
+                                                        <li class="list-group-item">
+                                                            <Strong>Location:</Strong>
+															<?php echo esc_html( $alpha_location );?>
+                                                        </li>
+                                                        <li class="list-group-item">
+                                                            <Strong>Date:</Strong>
+															<?php echo esc_html( $alpha_date );?>
+                                                        </li>
+														<?php if ( $alpha_licensed ): ?>
+                                                            <li class="list-group-item">
+                                                                <Strong>Licensed information:</Strong>
+																<?php
+																$alpha_licensed_information = apply_filters( "the_content",$alpha_license_information);
+																echo $alpha_licensed_information;
+																?>
+                                                            </li>
+														<?php endif; ?>
+                                                    </ul>
+                                                </div>
+											<?php
+											endif;
 											wp_link_pages();
 											?>
                                         </div>
@@ -130,25 +166,25 @@ if ( ! is_active_sidebar( "sidebar-1" ) ) {
 												<?php if ( function_exists( "the_field" ) ): ?>
                                                     <p>
 														<?php
-														$facebook = get_field( "facebook","user_".get_the_author_meta( "ID" ));
+														$facebook = get_field( "facebook", "user_" . get_the_author_meta( "ID" ) );
 														if ( $facebook ):?>
                                                             Facebook:<?php the_field( "facebook", "user_" . get_the_author_meta(
 																	"ID" ) ); ?><br>
 														<?php endif; ?>
 
-	                                                    <?php
-	                                                    $twitter = get_field( "twitter","user_".get_the_author_meta( "ID" ));
-	                                                    if ( $twitter ):?>
+														<?php
+														$twitter = get_field( "twitter", "user_" . get_the_author_meta( "ID" ) );
+														if ( $twitter ):?>
                                                             Twitter:<?php the_field( "twitter", "user_" . get_the_author_meta(
-				                                                    "ID" ) ); ?><br>
-	                                                    <?php endif; ?>
+																	"ID" ) ); ?><br>
+														<?php endif; ?>
 
-                                                        <?php
-	                                                    $linkedin = get_field( "linkedin","user_".get_the_author_meta( "ID" ));
-	                                                    if ( $linkedin ):?>
+														<?php
+														$linkedin = get_field( "linkedin", "user_" . get_the_author_meta( "ID" ) );
+														if ( $linkedin ):?>
                                                             LinkedIn:<?php the_field( "linkedin", "user_" . get_the_author_meta(
-				                                                    "ID" ) ); ?><br>
-	                                                    <?php endif; ?>
+																	"ID" ) ); ?><br>
+														<?php endif; ?>
                                                     </p>
 												<?php endif; ?>
                                             </div>
